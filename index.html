@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espacio de Gaby</title>
+    <!-- Tipografías de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos CSS externos -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="xat-space-escenario" onclick="reproducirAudio()">
+
+        <!-- CONTENEDOR DE CORAZONES HUECOS DE TRAZO DELGADO -->
+        <div id="contenedor-corazones-huecos" class="contenedor-corazones-huecos"></div>
+
+        <!-- EFECTO DE ONDAS DE AGUA -->
+        <div class="contenedor-ondas">
+            <div class="onda-agua onda-1"></div>
+            <div class="onda-agua onda-2"></div>
+            <div class="onda-agua onda-3"></div>
+        </div>
+
+        <!-- BLOQUE CENTRAL CON EL NOMBRE -->
+        <div class="contenedor-nombre">
+            <h1 class="texto-caligrafico-glow">Gaby</h1>
+            
+            <div class="xat-divider">
+                <div class="xat-heart"></div>
+            </div>
+
+            <!-- REPRODUCTOR -->
+            <button class="reproductor-lindo" onclick="toggleAudio(event)">
+                <i id="icono-play" class="fa-solid fa-play"></i>
+                <span id="texto-reproductor">MÚSICA</span>
+            </button>
+        </div>
+
+        <!-- AUDIO NATIVO -->
+        <audio id="audio-bg" src="cancion.mp3" loop></audio>
+
+    </div>
+
+    <!-- SCRIPT DEL REPRODUCTOR Y GENERADOR DE CORAZONES -->
+    <script>
+        const audio = document.getElementById('audio-bg');
+        const iconoPlay = document.getElementById('icono-play');
+        const textoReproductor = document.getElementById('texto-reproductor');
+        const contenedorCorazones = document.getElementById('contenedor-corazones-huecos');
+
+        function reproducirAudio() {
+            if (audio.paused) {
+                audio.play().then(() => actualizarBoton(true)).catch(() => {});
+            }
+        }
+
+        function toggleAudio(event) {
+            event.stopPropagation();
+            if (audio.paused) {
+                audio.play().then(() => actualizarBoton(true));
+            } else {
+                audio.pause();
+                actualizarBoton(false);
+            }
+        }
+
+        function actualizarBoton(reproduciendo) {
+            if (reproduciendo) {
+                iconoPlay.className = "fa-solid fa-pause";
+                textoReproductor.textContent = "PAUSA";
+            } else {
+                iconoPlay.className = "fa-solid fa-play";
+                textoReproductor.textContent = "MÚSICA";
+            }
+        }
+
+        // GENERADOR DE CORAZONES HUECOS SVG DE TRAZO DELGADO
+        function crearCorazonHueco() {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('wrapper-corazon-brillantina');
+            
+            wrapper.style.top = Math.random() * 70 + 12 + '%';
+            
+            const tamano = Math.random() * 20 + 22;
+            wrapper.style.width = tamano + 'px';
+            wrapper.style.height = tamano + 'px';
+            
+            const duracion = Math.random() * 5 + 9;
+            wrapper.style.animationDuration = duracion + 's';
+
+            const estela = document.createElement('div');
+            estela.classList.add('estela-brillantina');
+
+            const svgCorazon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgCorazon.setAttribute("viewBox", "0 0 24 24");
+            svgCorazon.classList.add("corazon-svg-delgado");
+
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("d", "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
+            
+            svgCorazon.appendChild(path);
+
+            wrapper.appendChild(estela);
+            wrapper.appendChild(svgCorazon);
+            contenedorCorazones.appendChild(wrapper);
+
+            setTimeout(() => {
+                wrapper.remove();
+            }, duracion * 1000);
+        }
+
+        setInterval(crearCorazonHueco, 1000);
+
+        setTimeout(crearCorazonHueco, 300);
+        setTimeout(crearCorazonHueco, 1200);
+    </script>
+
+</body>
+</html>
