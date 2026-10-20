@@ -10,17 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Estilos CSS externos -->
+    <!-- Archivo CSS externo -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="xat-space-escenario" onclick="reproducirAudio()">
 
-        <!-- CONTENEDOR DE CORAZONES HUECOS DE TRAZO DELGADO -->
+        <!-- CONTENEDOR DE CORAZONES DISPERSOS INDIVIDUALES -->
         <div id="contenedor-corazones-huecos" class="contenedor-corazones-huecos"></div>
 
-        <!-- EFECTO DE ONDAS DE AGUA -->
+        <!-- EFECTO DE ONDAS DE AGUA PEQUEÑAS -->
         <div class="contenedor-ondas">
             <div class="onda-agua onda-1"></div>
             <div class="onda-agua onda-2"></div>
@@ -47,7 +47,7 @@
 
     </div>
 
-    <!-- SCRIPT DEL REPRODUCTOR Y GENERADOR DE CORAZONES -->
+    <!-- SCRIPT DEL REPRODUCTOR Y GENERADOR DE CORAZONES INDIVIDUALES ESPACIADOS -->
     <script>
         const audio = document.getElementById('audio-bg');
         const iconoPlay = document.getElementById('icono-play');
@@ -80,32 +80,52 @@
             }
         }
 
-        // GENERADOR DE CORAZONES HUECOS SVG DE TRAZO DELGADO
-        function crearCorazonHueco() {
+        // DIBUJAR UN CORAZÓN INDIVIDUAL
+        function crearCorazonIndividual() {
             const wrapper = document.createElement('div');
             wrapper.classList.add('wrapper-corazon-brillantina');
-            
-            wrapper.style.top = Math.random() * 70 + 12 + '%';
-            
-            const tamano = Math.random() * 20 + 22;
+
+            // Posición inicial aleatoria en la esquina inferior izquierda
+            const startX = Math.random() * 32 - 8;   // -8% a 24%
+            const startY = Math.random() * 15 + 95;   // 95% a 110%
+
+            // Trayectoria intermedia y final dispersa hacia la esquina superior derecha
+            const midX = Math.random() * 40 + 25;    // 25vw a 65vw
+            const midY = -(Math.random() * 40 + 25); // -25vh a -65vh
+            const endX = Math.random() * 30 + 80;    // 80vw a 110vw
+            const endY = -(Math.random() * 30 + 90); // -90vh a -120vh
+
+            const tamano = Math.random() * 16 + 20;  // 20px a 36px
+            const duracion = Math.random() * 5 + 13; // 13s a 18s (movimiento lento y refinado)
+
+            wrapper.style.left = startX + '%';
+            wrapper.style.top = startY + '%';
             wrapper.style.width = tamano + 'px';
             wrapper.style.height = tamano + 'px';
-            
-            const duracion = Math.random() * 5 + 9;
             wrapper.style.animationDuration = duracion + 's';
 
+            wrapper.style.setProperty('--mid-x', midX + 'vw');
+            wrapper.style.setProperty('--mid-y', midY + 'vh');
+            wrapper.style.setProperty('--end-x', endX + 'vw');
+            wrapper.style.setProperty('--end-y', endY + 'vh');
+
+            wrapper.style.setProperty('--rot-ini', (Math.random() * 30 - 15) + 'deg');
+            wrapper.style.setProperty('--rot-mid', (Math.random() * 20 - 10) + 'deg');
+            wrapper.style.setProperty('--rot-end', (Math.random() * 30 - 15) + 'deg');
+
+            // Estela con escarcha brillante
             const estela = document.createElement('div');
             estela.classList.add('estela-brillantina');
 
+            // SVG vector de corazón
             const svgCorazon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             svgCorazon.setAttribute("viewBox", "0 0 24 24");
             svgCorazon.classList.add("corazon-svg-delgado");
 
             const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
             path.setAttribute("d", "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
-            
-            svgCorazon.appendChild(path);
 
+            svgCorazon.appendChild(path);
             wrapper.appendChild(estela);
             wrapper.appendChild(svgCorazon);
             contenedorCorazones.appendChild(wrapper);
@@ -115,10 +135,15 @@
             }, duracion * 1000);
         }
 
-        setInterval(crearCorazonHueco, 1000);
+        // BUCLE INDIVIDUAL CON ESPACIADO ELEGANTE (1.1s A 2.4s ENTRE CADA CORAZÓN)
+        function programarSiguienteCorazon() {
+            crearCorazonIndividual();
+            const proximaEspera = Math.random() * 1300 + 1100;
+            setTimeout(programarSiguienteCorazon, proximaEspera);
+        }
 
-        setTimeout(crearCorazonHueco, 300);
-        setTimeout(crearCorazonHueco, 1200);
+        // Inicio pausado
+        setTimeout(programarSiguienteCorazon, 400);
     </script>
 
 </body>
