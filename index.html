@@ -17,6 +17,9 @@
 
     <div class="xat-space-escenario" onclick="reproducirAudio()">
 
+        <!-- CAPA DE POLVO DE HADAS AMBIENTAL EN EL FONDO -->
+        <div id="contenedor-polvo-hadas" class="contenedor-polvo-hadas"></div>
+
         <!-- CONTENEDOR DE CORAZONES DISPERSOS INDIVIDUALES -->
         <div id="contenedor-corazones-huecos" class="contenedor-corazones-huecos"></div>
 
@@ -47,12 +50,13 @@
 
     </div>
 
-    <!-- SCRIPT DEL REPRODUCTOR Y GENERADOR DE CORAZONES INDIVIDUALES ESPACIADOS -->
+    <!-- SCRIPTS DEL ESPACIO -->
     <script>
         const audio = document.getElementById('audio-bg');
         const iconoPlay = document.getElementById('icono-play');
         const textoReproductor = document.getElementById('texto-reproductor');
         const contenedorCorazones = document.getElementById('contenedor-corazones-huecos');
+        const contenedorPolvo = document.getElementById('contenedor-polvo-hadas');
 
         function reproducirAudio() {
             if (audio.paused) {
@@ -80,23 +84,54 @@
             }
         }
 
-        // DIBUJAR UN CORAZÓN INDIVIDUAL
+        // GENERADOR DE POLVO DE HADAS ULTRA-PEQUEÑO (ESTILO BRILLANTINA DE CORAZONES)
+        function crearMotaPolvoHada() {
+            const mota = document.createElement('div');
+            mota.classList.add('mota-polvo-hada');
+
+            // Posición aleatoria por todo el fondo
+            mota.style.left = Math.random() * 100 + '%';
+            mota.style.top = Math.random() * 100 + '%';
+
+            // Tamaño diminuto de polvo de hadas (entre 1.2px y 3px)
+            const tamano = Math.random() * 1.8 + 1.2;
+            mota.style.width = tamano + 'px';
+            mota.style.height = tamano + 'px';
+
+            // Tiempos aleatorios de parpadeo (entre 2s y 4.5s)
+            const duracion = Math.random() * 2.5 + 2;
+            mota.style.animationDuration = duracion + 's';
+
+            contenedorPolvo.appendChild(mota);
+
+            setTimeout(() => {
+                mota.remove();
+            }, duracion * 1000);
+        }
+
+        // Tanda inicial
+        for (let i = 0; i < 35; i++) {
+            setTimeout(crearMotaPolvoHada, Math.random() * 1500);
+        }
+
+        // Generación continua muy fluida
+        setInterval(crearMotaPolvoHada, 120);
+
+        // DIBUJAR UN CORAZÓN INDIVIDUAL (INF-IZQ -> SUP-DER)
         function crearCorazonIndividual() {
             const wrapper = document.createElement('div');
             wrapper.classList.add('wrapper-corazon-brillantina');
 
-            // Posición inicial aleatoria en la esquina inferior izquierda
-            const startX = Math.random() * 32 - 8;   // -8% a 24%
-            const startY = Math.random() * 15 + 95;   // 95% a 110%
+            const startX = Math.random() * 32 - 8;
+            const startY = Math.random() * 15 + 95;
 
-            // Trayectoria intermedia y final dispersa hacia la esquina superior derecha
-            const midX = Math.random() * 40 + 25;    // 25vw a 65vw
-            const midY = -(Math.random() * 40 + 25); // -25vh a -65vh
-            const endX = Math.random() * 30 + 80;    // 80vw a 110vw
-            const endY = -(Math.random() * 30 + 90); // -90vh a -120vh
+            const midX = Math.random() * 40 + 25;
+            const midY = -(Math.random() * 40 + 25);
+            const endX = Math.random() * 30 + 80;
+            const endY = -(Math.random() * 30 + 90);
 
-            const tamano = Math.random() * 16 + 20;  // 20px a 36px
-            const duracion = Math.random() * 5 + 13; // 13s a 18s (movimiento lento y refinado)
+            const tamano = Math.random() * 16 + 20;
+            const duracion = Math.random() * 5 + 13;
 
             wrapper.style.left = startX + '%';
             wrapper.style.top = startY + '%';
@@ -113,11 +148,9 @@
             wrapper.style.setProperty('--rot-mid', (Math.random() * 20 - 10) + 'deg');
             wrapper.style.setProperty('--rot-end', (Math.random() * 30 - 15) + 'deg');
 
-            // Estela con escarcha brillante
             const estela = document.createElement('div');
             estela.classList.add('estela-brillantina');
 
-            // SVG vector de corazón
             const svgCorazon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             svgCorazon.setAttribute("viewBox", "0 0 24 24");
             svgCorazon.classList.add("corazon-svg-delgado");
@@ -135,14 +168,12 @@
             }, duracion * 1000);
         }
 
-        // BUCLE INDIVIDUAL CON ESPACIADO ELEGANTE (1.1s A 2.4s ENTRE CADA CORAZÓN)
         function programarSiguienteCorazon() {
             crearCorazonIndividual();
             const proximaEspera = Math.random() * 1300 + 1100;
             setTimeout(programarSiguienteCorazon, proximaEspera);
         }
 
-        // Inicio pausado
         setTimeout(programarSiguienteCorazon, 400);
     </script>
 
