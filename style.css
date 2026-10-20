@@ -53,7 +53,7 @@ body, html {
 }
 
 /* =======================================================
-   SISTEMA DE CORAZONES HUECOS DE TRAZO ULTRA-DELGADO CON BRILLANTINA
+   SISTEMA DE CORAZONES DIAGONALES DISPERSOS (INF-IZQ -> SUP-DER)
    ======================================================= */
 .contenedor-corazones-huecos {
     position: absolute;
@@ -68,107 +68,120 @@ body, html {
 
 .wrapper-corazon-brillantina {
     position: absolute;
-    left: -10%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
     user-select: none;
-    
-    animation: vueloIzqADer linear forwards;
+    animation: vueloDiagonalOrganico linear forwards;
 }
 
-/* CORAZÓN SVG DE TRAZO DELGADO (#ffffff) */
+/* CORAZÓN SVG CON DESTELLO DE LUZ E INTENSO NEÓN */
 .corazon-svg-delgado {
     width: 100%;
     height: 100%;
     position: relative;
     z-index: 3;
     fill: none;
-    stroke: rgba(255, 255, 255, 0.95);
-    stroke-width: 0.8px;
+    stroke: #ffffff;
+    stroke-width: 0.85px;
     stroke-linecap: round;
     stroke-linejoin: round;
     
     filter: 
-        drop-shadow(0 0 2px #ffffff)
-        drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+        drop-shadow(0 0 3px #ffffff)
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.95))
+        drop-shadow(0 0 16px rgba(255, 200, 230, 0.85))
+        drop-shadow(0 0 25px rgba(255, 255, 255, 0.6));
         
-    animation: destelloCorazon 1.5s ease-in-out infinite alternate;
+    animation: resplandorSuperBrillo 1.2s ease-in-out infinite alternate;
 }
 
-/* ESTELA DE BRILLANTINA TRASERA */
+/* ESTELA MULTI-CASCADA DE ESCARCHA Y DESTELLES TRASEROS */
 .estela-brillantina {
     position: absolute;
-    top: 50%;
+    top: 55%;
     right: 85%;
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     background: #ffffff;
     clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
     pointer-events: none;
     z-index: 1;
     
     box-shadow: 
-        -10px -6px 0px 1px rgba(255, 255, 255, 0.85),
-        -20px 8px 0px 0px rgba(240, 220, 255, 0.75),
-        -32px -12px 0px 1px rgba(255, 255, 255, 0.65),
-        -46px 5px 0px 0px rgba(255, 255, 255, 0.5),
-        -60px -3px 0px 1px rgba(230, 210, 255, 0.3);
+        -8px 8px 0px 1px #ffffff,
+        -16px 18px 0px 0.5px rgba(255, 240, 255, 0.95),
+        -26px 28px 0px 1.5px #ffffff,
+        -38px 40px 0px 0.5px rgba(255, 220, 245, 0.85),
+        -50px 52px 0px 1px rgba(255, 255, 255, 0.75),
+        -64px 66px 0px 0.5px rgba(230, 200, 255, 0.6),
+        -78px 80px 0px 1px rgba(255, 255, 255, 0.4);
         
-    filter: drop-shadow(0 0 4px #ffffff);
-    animation: estelaCaidaBrillantina 1.3s ease-out infinite alternate;
+    filter: 
+        drop-shadow(0 0 6px #ffffff) 
+        drop-shadow(0 0 14px rgba(255, 255, 255, 0.9))
+        drop-shadow(0 0 22px rgba(255, 180, 220, 0.7));
+        
+    animation: estelaCaidaInclinada 1.2s ease-out infinite alternate;
 }
 
-/* ANIMACIÓN DE VUELO */
-@keyframes vueloIzqADer {
+/* ANIMACIÓN DIAGONAL ORGÁNICA CON ONDULACIÓN DISPERSA */
+@keyframes vueloDiagonalOrganico {
     0% {
-        left: -10%;
         opacity: 0;
-        transform: translateY(0) rotate(-10deg) scale(0.6);
+        transform: translate(0, 0) rotate(var(--rot-ini)) scale(0.6);
     }
     15% {
         opacity: 0.95;
     }
     50% {
-        transform: translateY(-25px) rotate(6deg) scale(1.05);
+        opacity: 1;
+        transform: translate(var(--mid-x), var(--mid-y)) rotate(var(--rot-mid)) scale(1.08);
+    }
+    85% {
         opacity: 0.9;
     }
-    82% {
-        opacity: 0.85;
-    }
     100% {
-        left: 108%;
         opacity: 0;
-        transform: translateY(-50px) rotate(-10deg) scale(0.75);
+        transform: translate(var(--end-x), var(--end-y)) rotate(var(--rot-end)) scale(0.7);
     }
 }
 
-@keyframes destelloCorazon {
+/* Super destello de escarcha en el borde del corazón */
+@keyframes resplandorSuperBrillo {
     0% {
-        filter: brightness(1) drop-shadow(0 0 2px #ffffff);
+        filter: 
+            drop-shadow(0 0 2px #ffffff)
+            drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))
+            drop-shadow(0 0 12px rgba(255, 190, 230, 0.6));
     }
     100% {
-        filter: brightness(1.35) drop-shadow(0 0 6px #ffffff);
+        filter: 
+            drop-shadow(0 0 5px #ffffff)
+            drop-shadow(0 0 14px #ffffff)
+            drop-shadow(0 0 24px rgba(255, 210, 240, 0.95))
+            drop-shadow(0 0 32px rgba(255, 255, 255, 0.8));
     }
 }
 
-@keyframes estelaCaidaBrillantina {
+/* Caída sutil de la escarcha trasera */
+@keyframes estelaCaidaInclinada {
     0% {
-        opacity: 0.85;
-        transform: scale(1) translateY(0) rotate(0deg);
+        opacity: 0.95;
+        transform: scale(1.1) translate(0, 0) rotate(0deg);
     }
     50% {
-        opacity: 0.55;
-        transform: scale(0.75) translateY(10px) rotate(40deg);
+        opacity: 0.65;
+        transform: scale(0.8) translate(-8px, 8px) rotate(25deg);
     }
     100% {
-        opacity: 0.1;
-        transform: scale(0.3) translateY(20px) rotate(80deg);
+        opacity: 0.15;
+        transform: scale(0.3) translate(-16px, 16px) rotate(50deg);
     }
 }
 
-/* ONDAS DE AGUA ALEATORIAS */
+/* ONDAS DE AGUA / BURBUJAS PEQUEÑAS */
 .contenedor-ondas {
     position: absolute;
     width: 100%;
@@ -183,8 +196,8 @@ body, html {
 .onda-agua {
     position: absolute;
     border-radius: 50%;
-    border: 1.5px solid rgba(255, 253, 250, 0.65);
-    box-shadow: 0 0 12px rgba(255, 253, 250, 0.3), inset 0 0 10px rgba(255, 253, 250, 0.2);
+    border: 1.2px solid rgba(255, 253, 250, 0.55);
+    box-shadow: 0 0 8px rgba(255, 253, 250, 0.25), inset 0 0 6px rgba(255, 253, 250, 0.15);
     opacity: 0;
 }
 
@@ -193,27 +206,27 @@ body, html {
 .onda-3 { animation: ondaAnimada3 9s ease-out infinite; animation-delay: 5s; }
 
 @keyframes ondaAnimada1 {
-    0% { top: 25%; left: 20%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.8; }
-    50% { top: 25%; left: 20%; width: 280px; height: 280px; transform: translate(-50%, -50%); opacity: 0; }
+    0% { top: 25%; left: 20%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.75; }
+    50% { top: 25%; left: 20%; width: 140px; height: 140px; transform: translate(-50%, -50%); opacity: 0; }
     51% { top: 70%; left: 75%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0; }
-    52% { opacity: 0.8; }
-    100% { top: 70%; left: 75%; width: 280px; height: 280px; transform: translate(-50%, -50%); opacity: 0; }
+    52% { opacity: 0.75; }
+    100% { top: 70%; left: 75%; width: 140px; height: 140px; transform: translate(-50%, -50%); opacity: 0; }
 }
 
 @keyframes ondaAnimada2 {
-    0% { top: 80%; left: 30%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.8; }
-    50% { top: 80%; left: 30%; width: 260px; height: 260px; transform: translate(-50%, -50%); opacity: 0; }
+    0% { top: 80%; left: 30%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.75; }
+    50% { top: 80%; left: 30%; width: 120px; height: 120px; transform: translate(-50%, -50%); opacity: 0; }
     51% { top: 30%; left: 80%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0; }
-    52% { opacity: 0.8; }
-    100% { top: 30%; left: 80%; width: 260px; height: 260px; transform: translate(-50%, -50%); opacity: 0; }
+    52% { opacity: 0.75; }
+    100% { top: 30%; left: 80%; width: 120px; height: 120px; transform: translate(-50%, -50%); opacity: 0; }
 }
 
 @keyframes ondaAnimada3 {
-    0% { top: 50%; left: 50%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.8; }
-    50% { top: 50%; left: 50%; width: 300px; height: 300px; transform: translate(-50%, -50%); opacity: 0; }
+    0% { top: 50%; left: 50%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.75; }
+    50% { top: 50%; left: 50%; width: 150px; height: 150px; transform: translate(-50%, -50%); opacity: 0; }
     51% { top: 20%; left: 40%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0; }
-    52% { opacity: 0.8; }
-    100% { top: 20%; left: 40%; width: 300px; height: 300px; transform: translate(-50%, -50%); opacity: 0; }
+    52% { opacity: 0.75; }
+    100% { top: 20%; left: 40%; width: 150px; height: 150px; transform: translate(-50%, -50%); opacity: 0; }
 }
 
 /* CONTENEDOR CENTRAL */
@@ -226,10 +239,10 @@ body, html {
     align-items: center;
 }
 
-/* NOMBRE "Gaby" ESTILIZADO ULTRA DELGADO Y FINO */
+/* NOMBRE "Gaby" ESTILIZADO Y FINO */
 .texto-caligrafico-glow {
     font-family: 'Great Vibes', cursive, serif;
-    font-size: 11.5rem; /* Ajuste proporcional de escala para finura extrema */
+    font-size: 11.5rem;
     font-weight: 100;
     margin: 0;
     padding: 10px 40px;
@@ -239,7 +252,6 @@ body, html {
     position: relative;
     letter-spacing: 0.5px;
     
-    /* Anti-aliasing para suavizar y afinar los bordes del trazo en pantalla */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
@@ -250,7 +262,6 @@ body, html {
     -webkit-text-fill-color: transparent;
     animation: ráfagaLuzGaby 8s linear infinite;
     
-    /* Sombra muy ligera y limpia para no ensanchar la letra */
     filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 8px rgba(220, 100, 150, 0.3));
 }
 
