@@ -38,15 +38,25 @@
                 <div class="xat-heart"></div>
             </div>
 
-            <!-- REPRODUCTOR -->
-            <button class="reproductor-lindo" onclick="toggleAudio(event)">
-                <i id="icono-play" class="fa-solid fa-play"></i>
-                <span id="texto-reproductor">MÚSICA</span>
-            </button>
+            <!-- REPRODUCTOR LINDO CON CONTROL DE VOLUMEN -->
+            <div class="reproductor-lindo" onclick="event.stopPropagation()">
+                <button class="btn-play-pause" onclick="toggleAudio(event)" title="Reproducir / Pausar">
+                    <i id="icono-play" class="fa-solid fa-play"></i>
+                    <span id="texto-reproductor">MÚSICA</span>
+                </button>
+                
+                <div class="control-volumen">
+                    <i id="icono-volumen" class="fa-solid fa-volume-high" onclick="toggleMute(event)" title="Silenciar / Activar sonido"></i>
+                    <input type="range" id="slider-volumen" min="0" max="1" step="0.01" value="0.8" oninput="cambiarVolumen(event)" title="Ajustar Volumen">
+                </div>
+            </div>
         </div>
 
-        <!-- AUDIO NATIVO -->
-        <audio id="audio-bg" src="cancion.mp3" loop></audio>
+        <!-- AUDIO NATIVO ("Burbujas de Amor" - Juan Luis Guerra) -->
+        <audio id="audio-bg" loop>
+            <source src="burbujas_de_amor.mp3" type="audio/mpeg">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
 
     </div>
 
@@ -55,8 +65,15 @@
         const audio = document.getElementById('audio-bg');
         const iconoPlay = document.getElementById('icono-play');
         const textoReproductor = document.getElementById('texto-reproductor');
+        const sliderVolumen = document.getElementById('slider-volumen');
+        const iconoVolumen = document.getElementById('icono-volumen');
         const contenedorCorazones = document.getElementById('contenedor-corazones-huecos');
         const contenedorPolvo = document.getElementById('contenedor-polvo-hadas');
+
+        let volumenPrevio = 0.8;
+
+        // Establece volumen inicial
+        audio.volume = 0.8;
 
         function reproducirAudio() {
             if (audio.paused) {
@@ -65,7 +82,7 @@
         }
 
         function toggleAudio(event) {
-            event.stopPropagation();
+            if (event) event.stopPropagation();
             if (audio.paused) {
                 audio.play().then(() => actualizarBoton(true));
             } else {
@@ -84,21 +101,48 @@
             }
         }
 
+        function cambiarVolumen(event) {
+            if (event) event.stopPropagation();
+            const val = parseFloat(sliderVolumen.value);
+            audio.volume = val;
+            actualizarIconoVolumen(val);
+        }
+
+        function toggleMute(event) {
+            if (event) event.stopPropagation();
+            if (audio.volume > 0) {
+                volumenPrevio = audio.volume;
+                audio.volume = 0;
+                sliderVolumen.value = 0;
+            } else {
+                audio.volume = volumenPrevio > 0 ? volumenPrevio : 0.8;
+                sliderVolumen.value = audio.volume;
+            }
+            actualizarIconoVolumen(audio.volume);
+        }
+
+        function actualizarIconoVolumen(val) {
+            if (val === 0) {
+                iconoVolumen.className = "fa-solid fa-volume-xmark";
+            } else if (val < 0.5) {
+                iconoVolumen.className = "fa-solid fa-volume-low";
+            } else {
+                iconoVolumen.className = "fa-solid fa-volume-high";
+            }
+        }
+
         // GENERADOR DE POLVO DE HADAS ULTRA-PEQUEÑO (ESTILO BRILLANTINA DE CORAZONES)
         function crearMotaPolvoHada() {
             const mota = document.createElement('div');
             mota.classList.add('mota-polvo-hada');
 
-            // Posición aleatoria por todo el fondo
             mota.style.left = Math.random() * 100 + '%';
             mota.style.top = Math.random() * 100 + '%';
 
-            // Tamaño diminuto de polvo de hadas (entre 1.2px y 3px)
             const tamano = Math.random() * 1.8 + 1.2;
             mota.style.width = tamano + 'px';
             mota.style.height = tamano + 'px';
 
-            // Tiempos aleatorios de parpadeo (entre 2s y 4.5s)
             const duracion = Math.random() * 2.5 + 2;
             mota.style.animationDuration = duracion + 's';
 
@@ -109,12 +153,10 @@
             }, duracion * 1000);
         }
 
-        // Tanda inicial
         for (let i = 0; i < 35; i++) {
             setTimeout(crearMotaPolvoHada, Math.random() * 1500);
         }
 
-        // Generación continua muy fluida
         setInterval(crearMotaPolvoHada, 120);
 
         // DIBUJAR UN CORAZÓN INDIVIDUAL (INF-IZQ -> SUP-DER)
