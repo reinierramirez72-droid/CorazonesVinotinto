@@ -69,11 +69,9 @@ body, html {
 .mota-polvo-hada {
     position: absolute;
     background: #ffffff;
-    /* Forma diamantada de estrella idéntica a la estela de los corazones */
     clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
     opacity: 0;
     
-    /* Mismo resplandor neón multicapa que los brillos de los corazones */
     filter: 
         drop-shadow(0 0 3px #ffffff)
         drop-shadow(0 0 6px rgba(255, 255, 255, 0.9))
@@ -82,7 +80,6 @@ body, html {
     animation: titileoPolvoHada linear forwards;
 }
 
-/* Titileo sutil, destello y desvanecimiento suave */
 @keyframes titileoPolvoHada {
     0% {
         opacity: 0;
@@ -129,7 +126,6 @@ body, html {
     animation: vueloDiagonalOrganico linear forwards;
 }
 
-/* CORAZÓN SVG CON DESTELLO DE LUZ E INTENSO NEÓN */
 .corazon-svg-delgado {
     width: 100%;
     height: 100%;
@@ -150,7 +146,6 @@ body, html {
     animation: resplandorSuperBrillo 1.2s ease-in-out infinite alternate;
 }
 
-/* ESTELA MULTI-CASCADA DE ESCARCHA Y DESTELLES TRASEROS */
 .estela-brillantina {
     position: absolute;
     top: 55%;
@@ -179,7 +174,6 @@ body, html {
     animation: estelaCaidaInclinada 1.2s ease-out infinite alternate;
 }
 
-/* ANIMACIÓN DIAGONAL ORGÁNICA CON ONDULACIÓN DISPERSA */
 @keyframes vueloDiagonalOrganico {
     0% {
         opacity: 0;
@@ -201,7 +195,6 @@ body, html {
     }
 }
 
-/* Super destello de escarcha en el borde del corazón */
 @keyframes resplandorSuperBrillo {
     0% {
         filter: 
@@ -218,7 +211,6 @@ body, html {
     }
 }
 
-/* Caída sutil de la escarcha trasera */
 @keyframes estelaCaidaInclinada {
     0% {
         opacity: 0.95;
@@ -361,26 +353,127 @@ body, html {
 .xat-heart::before { top: -3px; left: 0; }
 .xat-heart::after { top: 0; left: -3px; }
 
+/* REPRODUCTOR LINDO CON BARRA DE VOLUMEN INTEGRADA */
 .reproductor-lindo {
     background: rgba(255, 253, 250, 0.18);
     border: 1px solid rgba(255, 253, 250, 0.4);
-    padding: 10px 24px;
+    padding: 8px 20px 8px 16px;
     border-radius: 25px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
     outline: none;
     transition: all 0.3s ease;
 }
 
 .reproductor-lindo:hover {
-    background: rgba(255, 253, 250, 0.32);
-    transform: scale(1.03);
+    background: rgba(255, 253, 250, 0.26);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3), 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
-.reproductor-lindo i { color: #fffdfa; font-size: 0.85rem; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
-.reproductor-lindo span { color: #fffdfa; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }ight: 600; letter-spacing: 1px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
+.btn-play-pause {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+}
+
+.btn-play-pause i { 
+    color: #fffdfa; 
+    font-size: 0.85rem; 
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); 
+    transition: transform 0.2s ease;
+}
+
+.btn-play-pause:hover i {
+    transform: scale(1.15);
+}
+
+.btn-play-pause span { 
+    color: #fffdfa; 
+    font-size: 0.8rem; 
+    font-weight: 600; 
+    letter-spacing: 1px; 
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); 
+}
+
+/* CONTROLES DE VOLUMEN */
+.control-volumen {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    padding-left: 12px;
+}
+
+.control-volumen i {
+    color: #fffdfa;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    width: 14px;
+    text-align: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.control-volumen i:hover {
+    transform: scale(1.15);
+    color: #ffeaf7;
+}
+
+/* SLIDER PERSONALIZADO DE VOLUMEN */
+#slider-volumen {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 70px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#slider-volumen:hover {
+    background: rgba(255, 255, 255, 0.55);
+}
+
+/* Thumb/Control deslizante para WebKit (Chrome, Safari, Edge) */
+#slider-volumen::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#slider-volumen::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
+
+/* Thumb/Control deslizante para Firefox */
+#slider-volumen::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#slider-volumen::-moz-range-thumb:hover {
+    transform: scale(1.3);
+}
