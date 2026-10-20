@@ -53,6 +53,59 @@ body, html {
 }
 
 /* =======================================================
+   POLVO DE HADAS ULTRA-PEQUEÑO EN EL FONDO (ESTILO CORAZONES)
+   ======================================================= */
+.contenedor-polvo-hadas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.mota-polvo-hada {
+    position: absolute;
+    background: #ffffff;
+    /* Forma diamantada de estrella idéntica a la estela de los corazones */
+    clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
+    opacity: 0;
+    
+    /* Mismo resplandor neón multicapa que los brillos de los corazones */
+    filter: 
+        drop-shadow(0 0 3px #ffffff)
+        drop-shadow(0 0 6px rgba(255, 255, 255, 0.9))
+        drop-shadow(0 0 10px rgba(255, 200, 230, 0.7));
+    
+    animation: titileoPolvoHada linear forwards;
+}
+
+/* Titileo sutil, destello y desvanecimiento suave */
+@keyframes titileoPolvoHada {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.3) rotate(0deg);
+    }
+    25% {
+        opacity: 0.85;
+    }
+    50% {
+        opacity: 1;
+        filter: brightness(1.8) drop-shadow(0 0 8px #ffffff);
+        transform: translateY(-8px) scale(1.2) rotate(45deg);
+    }
+    75% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-16px) scale(0.2) rotate(90deg);
+    }
+}
+
+/* =======================================================
    SISTEMA DE CORAZONES DIAGONALES DISPERSOS (INF-IZQ -> SUP-DER)
    ======================================================= */
 .contenedor-corazones-huecos {
@@ -189,7 +242,7 @@ body, html {
     top: 0;
     left: 0;
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
     overflow: hidden;
 }
 
@@ -330,4 +383,4 @@ body, html {
 }
 
 .reproductor-lindo i { color: #fffdfa; font-size: 0.85rem; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
-.reproductor-lindo span { color: #fffdfa; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
+.reproductor-lindo span { color: #fffdfa; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }ight: 600; letter-spacing: 1px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
