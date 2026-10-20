@@ -1,0 +1,322 @@
+/* RESET GENERAL */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+/* CONTENEDOR PRINCIPAL: FONDO VINO OSCURO (#3F0112 DE BASE) */
+.xat-space-escenario {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background: radial-gradient(
+        circle at 28% 22%, 
+        #5e011c 0%, 
+        #3F0112 45%, 
+        #220009 80%, 
+        #110004 100%
+    );
+    background-size: 140% 140%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 1;
+    
+    animation: xatFadeInSpace 2s ease-out forwards, luzRespiracion 10s ease-in-out infinite alternate;
+    opacity: 0;
+}
+
+@keyframes luzRespiracion {
+    0% {
+        background-position: 0% 0%;
+        filter: brightness(1);
+    }
+    100% {
+        background-position: 12% 12%;
+        filter: brightness(1.08);
+    }
+}
+
+@keyframes xatFadeInSpace {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* =======================================================
+   SISTEMA DE CORAZONES HUECOS DE TRAZO ULTRA-DELGADO CON BRILLANTINA
+   ======================================================= */
+.contenedor-corazones-huecos {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 4;
+    overflow: hidden;
+}
+
+.wrapper-corazon-brillantina {
+    position: absolute;
+    left: -10%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    user-select: none;
+    
+    animation: vueloIzqADer linear forwards;
+}
+
+/* CORAZÓN SVG DE TRAZO DELGADO (#ffffff) */
+.corazon-svg-delgado {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 3;
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.95);
+    stroke-width: 0.8px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    
+    filter: 
+        drop-shadow(0 0 2px #ffffff)
+        drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+        
+    animation: destelloCorazon 1.5s ease-in-out infinite alternate;
+}
+
+/* ESTELA DE BRILLANTINA TRASERA */
+.estela-brillantina {
+    position: absolute;
+    top: 50%;
+    right: 85%;
+    width: 5px;
+    height: 5px;
+    background: #ffffff;
+    clip-path: polygon(50% 0%, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0% 50%, 37% 37%);
+    pointer-events: none;
+    z-index: 1;
+    
+    box-shadow: 
+        -10px -6px 0px 1px rgba(255, 255, 255, 0.85),
+        -20px 8px 0px 0px rgba(240, 220, 255, 0.75),
+        -32px -12px 0px 1px rgba(255, 255, 255, 0.65),
+        -46px 5px 0px 0px rgba(255, 255, 255, 0.5),
+        -60px -3px 0px 1px rgba(230, 210, 255, 0.3);
+        
+    filter: drop-shadow(0 0 4px #ffffff);
+    animation: estelaCaidaBrillantina 1.3s ease-out infinite alternate;
+}
+
+/* ANIMACIÓN DE VUELO */
+@keyframes vueloIzqADer {
+    0% {
+        left: -10%;
+        opacity: 0;
+        transform: translateY(0) rotate(-10deg) scale(0.6);
+    }
+    15% {
+        opacity: 0.95;
+    }
+    50% {
+        transform: translateY(-25px) rotate(6deg) scale(1.05);
+        opacity: 0.9;
+    }
+    82% {
+        opacity: 0.85;
+    }
+    100% {
+        left: 108%;
+        opacity: 0;
+        transform: translateY(-50px) rotate(-10deg) scale(0.75);
+    }
+}
+
+@keyframes destelloCorazon {
+    0% {
+        filter: brightness(1) drop-shadow(0 0 2px #ffffff);
+    }
+    100% {
+        filter: brightness(1.35) drop-shadow(0 0 6px #ffffff);
+    }
+}
+
+@keyframes estelaCaidaBrillantina {
+    0% {
+        opacity: 0.85;
+        transform: scale(1) translateY(0) rotate(0deg);
+    }
+    50% {
+        opacity: 0.55;
+        transform: scale(0.75) translateY(10px) rotate(40deg);
+    }
+    100% {
+        opacity: 0.1;
+        transform: scale(0.3) translateY(20px) rotate(80deg);
+    }
+}
+
+/* ONDAS DE AGUA ALEATORIAS */
+.contenedor-ondas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.onda-agua {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 253, 250, 0.65);
+    box-shadow: 0 0 12px rgba(255, 253, 250, 0.3), inset 0 0 10px rgba(255, 253, 250, 0.2);
+    opacity: 0;
+}
+
+.onda-1 { animation: ondaAnimada1 8s ease-out infinite; }
+.onda-2 { animation: ondaAnimada2 10s ease-out infinite; animation-delay: 2.5s; }
+.onda-3 { animation: ondaAnimada3 9s ease-out infinite; animation-delay: 5s; }
+
+@keyframes ondaAnimada1 {
+    0% { top: 25%; left: 20%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.8; }
+    50% { top: 25%; left: 20%; width: 280px; height: 280px; transform: translate(-50%, -50%); opacity: 0; }
+    51% { top: 70%; left: 75%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0; }
+    52% { opacity: 0.8; }
+    100% { top: 70%; left: 75%; width: 280px; height: 280px; transform: translate(-50%, -50%); opacity: 0; }
+}
+
+@keyframes ondaAnimada2 {
+    0% { top: 80%; left: 30%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.8; }
+    50% { top: 80%; left: 30%; width: 260px; height: 260px; transform: translate(-50%, -50%); opacity: 0; }
+    51% { top: 30%; left: 80%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0; }
+    52% { opacity: 0.8; }
+    100% { top: 30%; left: 80%; width: 260px; height: 260px; transform: translate(-50%, -50%); opacity: 0; }
+}
+
+@keyframes ondaAnimada3 {
+    0% { top: 50%; left: 50%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0.8; }
+    50% { top: 50%; left: 50%; width: 300px; height: 300px; transform: translate(-50%, -50%); opacity: 0; }
+    51% { top: 20%; left: 40%; width: 0px; height: 0px; transform: translate(-50%, -50%); opacity: 0; }
+    52% { opacity: 0.8; }
+    100% { top: 20%; left: 40%; width: 300px; height: 300px; transform: translate(-50%, -50%); opacity: 0; }
+}
+
+/* CONTENEDOR CENTRAL */
+.contenedor-nombre {
+    position: relative;
+    z-index: 20;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* NOMBRE "Gaby" ESTILIZADO ULTRA DELGADO Y FINO */
+.texto-caligrafico-glow {
+    font-family: 'Great Vibes', cursive, serif;
+    font-size: 11.5rem; /* Ajuste proporcional de escala para finura extrema */
+    font-weight: 100;
+    margin: 0;
+    padding: 10px 40px;
+    line-height: 1.1;
+    user-select: none;
+    display: block;
+    position: relative;
+    letter-spacing: 0.5px;
+    
+    /* Anti-aliasing para suavizar y afinar los bordes del trazo en pantalla */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    background: linear-gradient(110deg, #ffffff 0%, #ffffff 40%, #ffeaf7 50%, #ffffff 60%, #ffffff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ráfagaLuzGaby 8s linear infinite;
+    
+    /* Sombra muy ligera y limpia para no ensanchar la letra */
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 8px rgba(220, 100, 150, 0.3));
+}
+
+@keyframes ráfagaLuzGaby {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+.xat-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -15px;
+    margin-bottom: 25px;
+    opacity: 0.85;
+}
+
+.xat-divider::before, .xat-divider::after {
+    content: "";
+    width: 90px;
+    height: 1.5px;
+    background: linear-gradient(to right, transparent, rgba(255, 253, 250, 0.85) 50%, transparent);
+}
+
+.xat-heart {
+    width: 6px;
+    height: 6px;
+    background-color: #fffdfa;
+    position: relative;
+    transform: rotate(45deg);
+    margin: 0 12px;
+    box-shadow: 0 0 8px rgba(255, 253, 250, 0.8);
+}
+
+.xat-heart::before, .xat-heart::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background-color: #fffdfa;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.xat-heart::before { top: -3px; left: 0; }
+.xat-heart::after { top: 0; left: -3px; }
+
+.reproductor-lindo {
+    background: rgba(255, 253, 250, 0.18);
+    border: 1px solid rgba(255, 253, 250, 0.4);
+    padding: 10px 24px;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.reproductor-lindo:hover {
+    background: rgba(255, 253, 250, 0.32);
+    transform: scale(1.03);
+}
+
+.reproductor-lindo i { color: #fffdfa; font-size: 0.85rem; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
+.reproductor-lindo span { color: #fffdfa; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); }
